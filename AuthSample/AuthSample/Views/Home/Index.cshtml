@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Главная страница";
+}
+
+<div>
+    <div>@ViewData["UserEmail"]</div>
+
+    @* <a asp-action="Logout" asp-controller="Account">Выйти из системы</a> *@
+
+    <form asp-action="Logout" asp-controller="Account">
+        <input type="submit" value="Выйти из системы">
+    </form>
+</div>
