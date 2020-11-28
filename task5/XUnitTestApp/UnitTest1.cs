@@ -18,7 +18,6 @@ namespace XUnitTestApp
 
             var result = controller.GetMaterials("iswork");
 
-
         }
     }
 }
