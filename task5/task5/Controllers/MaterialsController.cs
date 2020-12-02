@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using task5;
+using System.Configuration;
+using Microsoft.IdentityModel.Protocols;
+using Microsoft.Extensions.Configuration;
 
 namespace task5.Controllers
 {
@@ -17,17 +20,19 @@ namespace task5.Controllers
     {
         private readonly ApplicationContext _context;
         IWebHostEnvironment _appEnvironmnet;
+        private IConfiguration _configuration;
         public List<string> Categories = new List<string> { "Presentation", "Application", "Other" };
 
-        public MaterialsController(ApplicationContext context, IWebHostEnvironment appEnvironment)
+        public MaterialsController(ApplicationContext context, IWebHostEnvironment appEnvironment, IConfiguration configuration)
         {
             _context = context;
             _appEnvironmnet = appEnvironment;
+            _configuration = configuration;
         }
 
         // GET: api/Materials/file
         [HttpGet("{Name}")]
-        public async Task<ActionResult<Material>> GetMaterials(string Name)
+        public ActionResult<Material> GetMaterials(string Name)
         {
             Material material;
 
@@ -52,22 +57,22 @@ namespace task5.Controllers
 
                 if (Version != null)
                 {
-                    Path = _appEnvironmnet.ContentRootPath + $"/Files/{material.Name}_" + Version;
+                    Path = _configuration.GetValue<string>("PathFiles") + material.Name + "_" + Version;
                     mas = System.IO.File.ReadAllBytes(Path);
                     return File(mas, "application/octet-stream", material.Name);
                 }
                 else
                 {
-                    Path = _appEnvironmnet.ContentRootPath + $"/Files/{material.Name}_" + material.Versions.Count();
+                    Path = _configuration.GetValue<string>("PathFiles") + material.Name + "_" + material.Versions.Count();
                     mas = System.IO.File.ReadAllBytes(Path);
                     return File(mas, "application/octet-stream", material.Name);
                 }
             }
             return NoContent();
         }
-        
+
         [HttpGet]
-        public async Task<ActionResult<List<Material>>> GetFilteredMaterials(string category)
+        public ActionResult<List<Material>> GetFilteredMaterials(string category)
         {
             var materials = from m in _context.Materials
                             select m;
@@ -76,28 +81,28 @@ namespace task5.Controllers
             {
                 materials = materials.Where(s => s.Category == category);
                 return materials.ToList();
-            }    
+            }
             return BadRequest();
         }
         // GET: api/Materials/5
         //[HttpGet("{id}")]
         //public async Task<ActionResult<Material>> GetMaterial(int id)
         //{
-            //var material = await _context.Materials.FindAsync(id);
+        //var material = await _context.Materials.FindAsync(id);
 
-            //if (material == null)
-            //{
-                //return NotFound();
-            //}
+        //if (material == null)
+        //{
+        //return NotFound();
+        //}
 
-            //return material;
+        //return material;
         //}
 
         // PUT: api/Materials/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPatch]
-        public async Task<ActionResult<Material>> PatchMaterial(string Name, string Category)
+        public ActionResult<Material> PatchMaterial(string Name, string Category)
         {
             Material material;
 
@@ -116,24 +121,29 @@ namespace task5.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         [Route("add")]
-        public async Task<ActionResult> PostMaterial(NewMaterialDto material)
+        public async Task<ActionResult> PostMaterial([FromForm]NewMaterialDto material, [FromForm]IFormFile file)
         {
             Material item;
             Version newVersion;
-            if (Categories.Contains(material.Category) && material.Name != null && material.File != null 
-                && _context.Materials.FirstOrDefault(p => p.Name == material.Name) == null)
+            //var appsetting = ConfigurationManager.AppSettings;
+            if (Categories.Contains(material.Category) && material.Name != null && file != null/*material.File != null*/
+                && _context.Materials.FirstOrDefault(p => p.Name == material.Name) == null && file.Length < 2147483648)
             {
                 item = new Material { Name = material.Name, Category = material.Category };
                 newVersion = new Version
                 {
                     Material = item,
-                    Path = _appEnvironmnet.ContentRootPath + $"/Files/{item.Name}_1", //_appEnvironmnet.WebRootPath "/Files/" + item.Name + "1",
+                    Path = _configuration.GetValue<string>("PathFiles") + item.Name + "_1", /*appsetting["defaultPath"],_appEnvironmnet.ContentRootPath + $"/Files/{item.Name}_1", //_appEnvironmnet.WebRootPath "/Files/" + item.Name + "1",*/
                     Release = 1,
-                    Size = material.File.Length,
+                    Size = file.Length,//material.File.Length,
                     UploadDateTime = DateTime.Now
                 };
                 //item.Versions.Add(newVersion);
-                System.IO.File.WriteAllBytes(newVersion.Path, material.File);
+                using (var filestream = new FileStream(newVersion.Path, FileMode.Create))
+                {
+                    await file.CopyToAsync(filestream);
+                }
+//                System.IO.File.WriteAllBytes(newVersion.Path, material.File);
                 //using (var fileStream = new FileStream(_appEnvironmnet.WebRootPath + newVersion.Path, FileMode.Create))
                 //{
                 //await material.File.CopyToAsync(fileStream);
@@ -150,32 +160,32 @@ namespace task5.Controllers
 
         [HttpPost]
         [Route("update")]
-        public async Task<ActionResult> UpdateMaterial(UpdateMaterialDto material)
+        public async Task<ActionResult> UpdateMaterial([FromForm]UpdateMaterialDto material, [FromForm]IFormFile file)
         {
             Material item;
             Version newVersion;
-            if (material.Name != null && material.File != null && 
-                _context.Materials.FirstOrDefault(p => p.Name == material.Name) != null)
+            if (material.Name != null && file != null &&
+                _context.Materials.FirstOrDefault(p => p.Name == material.Name) != null && file.Length < 2147483648)
             {
                 item = _context.Materials.Include(p => p.Versions).FirstOrDefault(p => p.Name == material.Name);
                 newVersion = new Version
                 {
                     Material = item,
-                    Path = _appEnvironmnet.ContentRootPath + $"/Files/{item.Name}_" + (item.Versions.Count() + 1), //"/Files/" + item.Name + (char)item.Versions.Count + 1,
+                    Path = _configuration.GetValue<string>("PathFiles") + item.Name + "_" + (item.Versions.Count() + 1), //"/Files/" + item.Name + (char)item.Versions.Count + 1,
                     Release = item.Versions.Count + 1,
-                    Size = material.File.Length,
+                    Size = file.Length,
                     UploadDateTime = DateTime.Now
                 };
-               // item.Versions.Add(newVersion);
-                System.IO.File.WriteAllBytes(newVersion.Path, material.File);
-                //using (var fileStream = new FileStream(_appEnvironmnet.WebRootPath + newVersion.Path, FileMode.Create))
-                //{
-                    //await material.File.CopyToAsync(fileStream);
-                //}
+                // item.Versions.Add(newVersion);
+                //System.IO.File.WriteAllBytes(newVersion.Path, material.File);
+                using (var fileStream = new FileStream(_appEnvironmnet.WebRootPath + newVersion.Path, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
                 //_context.Materials.Add(item);
                 _context.Versions.Add(newVersion);
                 _context.SaveChanges();
-                return CreatedAtAction("GetMaterials", new {Id = newVersion.Id }, newVersion);
+                return CreatedAtAction("GetMaterials", new { Id = newVersion.Id }, newVersion);
             }
             return BadRequest();
         }

@@ -9,7 +9,7 @@ namespace task5
 {
     public class UpdateMaterialDto
     {
-        public byte[] File { get; set; }
+        //public byte[] File { get; set; }
 
         public string Name { get; set; }
     }
