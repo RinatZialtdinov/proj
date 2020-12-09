@@ -25,5 +25,6 @@
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Pkgxunit_analyzers Condition=" '$(Pkgxunit_analyzers)' == '' ">C:\Users\Rinat\.nuget\packages\xunit.analyzers\0.10.0</Pkgxunit_analyzers>
     <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">C:\Users\Rinat\.nuget\packages\microsoft.codeanalysis.analyzers\2.9.4</PkgMicrosoft_CodeAnalysis_Analyzers>
+    <PkgHangfire_SqlServer Condition=" '$(PkgHangfire_SqlServer)' == '' ">C:\Users\Rinat\.nuget\packages\hangfire.sqlserver\1.7.18</PkgHangfire_SqlServer>
   </PropertyGroup>
 </Project>

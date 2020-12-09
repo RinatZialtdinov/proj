@@ -105,7 +105,7 @@ namespace WebMaterial.Controllers
             string methodName = stackTrace.GetFrame(0).GetMethod().Name;
             if (_userService.AccessCheck(login, methodName))
             {
-                var result = _userService.EditRolesAsync(email, role);
+                var result = _userService.EditRoles(email, role);
                 if (result != null)
                     return Ok();
             }

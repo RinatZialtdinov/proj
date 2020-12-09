@@ -29,7 +29,7 @@ namespace WebMaterial.BLL
             _userManager = userManager;
         }
 
-        public async Task<User> Register(User user, string password)
+        public User Register(User user, string password)
         {
             var result = _userManager.CreateAsync(user, password);
             if (result != null)
@@ -80,7 +80,7 @@ namespace WebMaterial.BLL
             }
             return false;
         }
-        public async Task<User> EditRolesAsync(string email, string role)
+        public User EditRoles(string email, string role)
         {
             User user = _context.Users.Include(s => s.UserRoles).ThenInclude(p => p.Role).FirstOrDefault(p => p.Email == email);//_userManager.FindByEmailAsync(email);
             Role newRole = _context.Rolles.Include(s => s.RoleAuthorities).ThenInclude(s => s.Authority).FirstOrDefault(s => s.Name == role);

@@ -15,6 +15,7 @@ using WebMaterial.DAL.Data;
 using WebMaterial.BLL;
 using Microsoft.AspNetCore.Identity;
 using WebMaterial.DAL.Models;
+using Hangfire;
 
 namespace WebMaterial
 {
@@ -45,8 +46,10 @@ namespace WebMaterial
             services.AddControllers().AddNewtonsoftJson(op =>
                     op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
- 
-           services.AddTransient<IMaterialService, MaterialService>();
+            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddHangfireServer();
+
+            services.AddTransient<IMaterialService, MaterialService>();
            services.AddTransient<IUserService, UserService>();
         }
 
@@ -57,6 +60,10 @@ namespace WebMaterial
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseHangfireDashboard();
+
+            RecurringJob.AddOrUpdate(() => MailService.SendMail("test message"), Cron.Minutely);
 
             app.UseHttpsRedirection();
 
