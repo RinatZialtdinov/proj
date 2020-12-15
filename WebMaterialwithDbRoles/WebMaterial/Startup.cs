@@ -46,8 +46,8 @@ namespace WebMaterial
             services.AddControllers().AddNewtonsoftJson(op =>
                     op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddHangfireServer();
+           // services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection")));
+          // services.AddHangfireServer();
 
             services.AddTransient<IMaterialService, MaterialService>();
            services.AddTransient<IUserService, UserService>();
@@ -61,9 +61,9 @@ namespace WebMaterial
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHangfireDashboard();
+           // app.UseHangfireDashboard();
 
-            RecurringJob.AddOrUpdate(() => MailService.SendMail("test message"), Cron.Minutely);
+            //RecurringJob.AddOrUpdate(() => MailService.SendMail("test message"), Cron.Minutely);
 
             app.UseHttpsRedirection();
 

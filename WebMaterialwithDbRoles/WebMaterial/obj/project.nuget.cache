@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8PpTf7jP8xZwLXL++bfRumYP6iUnIU5htwLtpnGb6C7KL9U0dvE/AiQP6ltA0HpgvzjFJORVgn/AG/+4OnHPcQ==",
+  "dgSpecHash": "yU9yF6AZ/ar5eXcWDpetKp+TC+vgTRXLJ8BAE1A1n4Zdjx5cNyaghOIQDTgvJ/qztf+BxT5V7P9obcqCFTfwng==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial\\WebMaterial.csproj",
+  "projectFilePath": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial\\WebMaterial.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rinat\\.nuget\\packages\\hangfire.aspnetcore\\1.7.18\\hangfire.aspnetcore.1.7.18.nupkg.sha512",
     "C:\\Users\\Rinat\\.nuget\\packages\\hangfire.core\\1.7.18\\hangfire.core.1.7.18.nupkg.sha512",

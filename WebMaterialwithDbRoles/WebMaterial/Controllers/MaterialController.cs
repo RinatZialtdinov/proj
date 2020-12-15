@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using WebMaterial.BLL;
 using WebMaterial.DAL.Models;
 using WebMaterial.DTO;
@@ -17,11 +18,13 @@ namespace WebMaterial.Controllers
     public class MaterialController : ControllerBase
     {
         private readonly IMaterialService _materialService;
+        private readonly IConfiguration _configuration;
         private List<string> Categories = new List<string> { "Presentation", "Application", "Other" };
 
-        public MaterialController(IMaterialService materialService)
+        public MaterialController(IMaterialService materialService, IConfiguration configuration)
         {
             _materialService = materialService;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -94,7 +97,7 @@ namespace WebMaterial.Controllers
         public IActionResult AddMaterial([FromForm] NewMaterialDto material, [FromForm] IFormFile file)
         {
             if (material.Name != null && material.Category != null && file != null
-                && file.Length < 2147483648 && Categories.Contains(material.Category))
+                && file.Length < _configuration.GetValue<long>("Size") && Categories.Contains(material.Category))
             {
                 Material newMaterial = new Material { Name = material.Name, Category = material.Category };
                 var result = _materialService.AddMaterial(newMaterial, file);
@@ -134,11 +137,11 @@ namespace WebMaterial.Controllers
         //}
 
         // DELETE: api/Material/5
-        [HttpDelete("{id}")]
-        public IActionResult DeleteMaterial(int id)
-        {
-            return Ok();
-        }
+        //[HttpDelete("{id}")]
+        //public IActionResult DeleteMaterial(int id)
+        //{
+        //    return Ok();
+        //}
 
 
         // GET: api/Material/Download/{name}

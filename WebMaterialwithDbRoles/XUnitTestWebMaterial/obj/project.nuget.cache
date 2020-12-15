@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZWm7xRgChnwZxst/bG3AKficpzfJI+vhCB/giMIh99KhaVUXCRskW+4r3ppAIWFyzkfRiYb7V9TCMzGS+jvj1w==",
+  "dgSpecHash": "wp1YR46SYs1zEpAEVXLK0abrGvyrIh1iWYHuJqkLf8tVJeFhyxbTrzb8HXTMuUMKNd574iiQAEX+1HyYtLA9Qg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Rinat\\Desktop\\oooooo\\XUnitTestWebMaterial\\XUnitTestTask_5.csproj",
+  "projectFilePath": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\XUnitTestWebMaterial\\XUnitTestTask_5.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rinat\\.nuget\\packages\\coverlet.collector\\1.2.0\\coverlet.collector.1.2.0.nupkg.sha512",
     "C:\\Users\\Rinat\\.nuget\\packages\\hangfire.aspnetcore\\1.7.18\\hangfire.aspnetcore.1.7.18.nupkg.sha512",

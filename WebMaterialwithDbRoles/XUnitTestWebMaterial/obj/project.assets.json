@@ -10389,11 +10389,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Rinat\\Desktop\\oooooo\\XUnitTestWebMaterial\\XUnitTestTask_5.csproj",
+      "projectUniqueName": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\XUnitTestWebMaterial\\XUnitTestTask_5.csproj",
       "projectName": "XUnitTestTask_5",
-      "projectPath": "C:\\Users\\Rinat\\Desktop\\oooooo\\XUnitTestWebMaterial\\XUnitTestTask_5.csproj",
+      "projectPath": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\XUnitTestWebMaterial\\XUnitTestTask_5.csproj",
       "packagesPath": "C:\\Users\\Rinat\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Rinat\\Desktop\\oooooo\\XUnitTestWebMaterial\\obj\\",
+      "outputPath": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\XUnitTestWebMaterial\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Rinat\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -10409,14 +10409,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial.BLL\\WebMaterial.BLL.csproj": {
-              "projectPath": "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial.BLL\\WebMaterial.BLL.csproj"
+            "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial.BLL\\WebMaterial.BLL.csproj": {
+              "projectPath": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial.BLL\\WebMaterial.BLL.csproj"
             },
-            "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial.DAL\\WebMaterial.DAL.csproj": {
-              "projectPath": "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial.DAL\\WebMaterial.DAL.csproj"
+            "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial.DAL\\WebMaterial.DAL.csproj": {
+              "projectPath": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial.DAL\\WebMaterial.DAL.csproj"
             },
-            "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial\\WebMaterial.csproj": {
-              "projectPath": "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial\\WebMaterial.csproj"
+            "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial\\WebMaterial.csproj": {
+              "projectPath": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial\\WebMaterial.csproj"
             }
           }
         }

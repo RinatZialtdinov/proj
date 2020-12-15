@@ -51,15 +51,15 @@ namespace WebMaterial.BLL
                 newVersion = new Version
                 {
                     Material = material,
-                    Path = _config.GetValue<string>("PathFiles") + material.Name + "_1",
+                    Path = _config.GetValue<string>("PathFiles") + material.Name + "_1" + "." + file.FileName.Split('.')[1],
                     Release = 1,
                     Size = file.Length,
                     UploadDateTime = DateTime.Now
                 };
-                using (var filestream = new FileStream(newVersion.Path, FileMode.Create))
-                {
-                    file.CopyToAsync(filestream);
-                }
+                var filestream = new FileStream(newVersion.Path, FileMode.Create);
+                
+                    file.CopyTo(filestream);
+                
                 _context.Materials.Add(material);
                 _context.Versions.Add(newVersion);
                 _context.SaveChanges();
@@ -77,7 +77,7 @@ namespace WebMaterial.BLL
                 newVersion = new Version
                 {
                     Material = material,
-                    Path = _config.GetValue<string>("PathFiles") + material.Name + "_" + (material.Versions.Count() + 1),
+                    Path = _config.GetValue<string>("PathFiles") + material.Name + "." + file.ContentType + "_" + (material.Versions.Count() + 1),
                     Release = material.Versions.Count() + 1,
                     Size = file.Length,
                     UploadDateTime = DateTime.Now

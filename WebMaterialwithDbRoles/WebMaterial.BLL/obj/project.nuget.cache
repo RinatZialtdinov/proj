@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CDDiV6RVVCR4+5XQSOXNgLskGP6TKxe8nOCWsI88ZFcbSerjKkPym2Y4BWaYIIIuaRr8mFO31vCl64hx3+lpKw==",
+  "dgSpecHash": "JMzs1gEFU4+cdO45+Ga62OJ9SIlB9xwdGRjcu7Us99Kl79L1BUC20g+YWG+sl0WN4HVDnttdNvSjyVY8++nPig==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial.BLL\\WebMaterial.BLL.csproj",
+  "projectFilePath": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial.BLL\\WebMaterial.BLL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rinat\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Rinat\\.nuget\\packages\\microsoft.aspnetcore\\2.2.0\\microsoft.aspnetcore.2.2.0.nupkg.sha512",

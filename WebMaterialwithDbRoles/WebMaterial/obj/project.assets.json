@@ -11162,11 +11162,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial\\WebMaterial.csproj",
+      "projectUniqueName": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial\\WebMaterial.csproj",
       "projectName": "WebMaterial",
-      "projectPath": "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial\\WebMaterial.csproj",
+      "projectPath": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial\\WebMaterial.csproj",
       "packagesPath": "C:\\Users\\Rinat\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial\\obj\\",
+      "outputPath": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Rinat\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -11182,11 +11182,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial.BLL\\WebMaterial.BLL.csproj": {
-              "projectPath": "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial.BLL\\WebMaterial.BLL.csproj"
+            "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial.BLL\\WebMaterial.BLL.csproj": {
+              "projectPath": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial.BLL\\WebMaterial.BLL.csproj"
             },
-            "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial.DAL\\WebMaterial.DAL.csproj": {
-              "projectPath": "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial.DAL\\WebMaterial.DAL.csproj"
+            "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial.DAL\\WebMaterial.DAL.csproj": {
+              "projectPath": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial.DAL\\WebMaterial.DAL.csproj"
             }
           }
         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial.DAL\\WebMaterial.DAL.csproj": {}
+    "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial.DAL\\WebMaterial.DAL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial.DAL\\WebMaterial.DAL.csproj": {
+    "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial.DAL\\WebMaterial.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial.DAL\\WebMaterial.DAL.csproj",
+        "projectUniqueName": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial.DAL\\WebMaterial.DAL.csproj",
         "projectName": "WebMaterial.DAL",
-        "projectPath": "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial.DAL\\WebMaterial.DAL.csproj",
+        "projectPath": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial.DAL\\WebMaterial.DAL.csproj",
         "packagesPath": "C:\\Users\\Rinat\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Rinat\\Desktop\\oooooo\\WebMaterial.DAL\\obj\\",
+        "outputPath": "C:\\Users\\Rinat\\Desktop\\WebMaterialwithDbRoles\\WebMaterial.DAL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Rinat\\AppData\\Roaming\\NuGet\\NuGet.Config",
