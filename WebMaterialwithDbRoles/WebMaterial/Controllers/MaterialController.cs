@@ -19,12 +19,13 @@ namespace WebMaterial.Controllers
     {
         private readonly IMaterialService _materialService;
         private readonly IConfiguration _configuration;
-        private List<string> Categories = new List<string> { "Presentation", "Application", "Other" };
+        private readonly IFileService _fileService;
 
-        public MaterialController(IMaterialService materialService, IConfiguration configuration)
+        public MaterialController(IMaterialService materialService, IConfiguration configuration, IFileService fileService)
         {
             _materialService = materialService;
             _configuration = configuration;
+            _fileService = fileService;
         }
 
         [HttpGet]
@@ -40,7 +41,7 @@ namespace WebMaterial.Controllers
             var material = _materialService.GetMaterialById(id);
             if (material != null)
                 return Ok(material);
-            return BadRequest();
+            return BadRequest("Не удалось найти материал с данным Id");
         }
 
         // GET: api/Material/{name}
@@ -51,60 +52,54 @@ namespace WebMaterial.Controllers
             var material = _materialService.GetMaterialByName(name);
             if (material != null)
                 return Ok(material);
-            return BadRequest();
+            return BadRequest("Не удалось найти материал с данным именем");
         }
 
         [HttpGet]
         [Route("filter")]
-        public ActionResult<List<Material>> GetFilteredMaterials(string category)
+        public ActionResult<List<Material>> GetFilteredMaterials(Category category)
         {
-            if (Categories.Contains(category))
-            {
-                var materials = _materialService.GetFilteredMaterials(category);
-                if (materials != null)
-                    return materials.ToList();
-            }
-            return BadRequest();
+            var materials = _materialService.GetFilteredMaterials(category);
+            if (materials != null)
+                return materials.ToList();
+            return BadRequest("Не удалось найти материалы с данной категорией");
         }
         [HttpGet]
         [Route("download")]
         public IActionResult DownloadFile(string name, int? version)
         {
-            var result = _materialService.DownloadFile(name, version);
+            var result = _fileService.DownloadFileFromSystem(name, version);
             if (result != null)
             {
                 return File(result, "application/octet-stream", name);
             }
-            return BadRequest();
+            return BadRequest("Не удалось найти файл с данным именем");
         }
 
         [HttpPatch]
-        public ActionResult<Material> ChangeMaterialCategory(string name, string category)
+        public ActionResult<Material> ChangeMaterialCategory(string name, Category category)
         {
-            if (Categories.Contains(category))
+            var material = _materialService.ChangeMaterialCategory(name, category);
+            if (material != null)
             {
-                var material = _materialService.ChangeMaterialCategory(name, category);
-                if (material != null)
-                {
-                    return Ok(material);
-                }
+                return Ok(material);
             }
-            return BadRequest();
+            return BadRequest("Не удалось найти материал с данным именем");
         }
 
         // POST: api/Material
         [HttpPost]
         public IActionResult AddMaterial([FromForm] NewMaterialDto material, [FromForm] IFormFile file)
         {
-            if (material.Name != null && material.Category != null && file != null
-                && file.Length < _configuration.GetValue<long>("Size") && Categories.Contains(material.Category))
+            if (material.Name != null && file != null
+                && file.Length < _configuration.GetValue<long>("Size"))
             {
-                Material newMaterial = new Material { Name = material.Name, Category = material.Category };
+                Material newMaterial = new Material { Name = material.Name, Category = material.Category, Extensio = file.FileName.Split(".").Last() };
                 var result = _materialService.AddMaterial(newMaterial, file);
                 if (result != null)
                     return Ok();
             }
-            return BadRequest();
+            return BadRequest("Материал с данным именем уже существует");
         }
 
         // POST: api/Material/add
@@ -118,7 +113,19 @@ namespace WebMaterial.Controllers
                 if (result != null)
                     return Ok();
             }
-            return BadRequest();
+            return BadRequest("Не удалось найти материал с данным именем");
+        }
+
+        [HttpDelete]
+        [Route("delete")]
+
+        public IActionResult DeleteMaterial(string name)
+        {
+            if (name != null && _materialService.DeleteMaterial(name) != null)
+            {
+                return Ok();
+            }
+            return BadRequest("Не удалось найти материал с данным именем");
         }
 
 

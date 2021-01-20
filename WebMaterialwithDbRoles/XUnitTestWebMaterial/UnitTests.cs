@@ -9,24 +9,32 @@ using Microsoft.AspNetCore.Http;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Moq;
+using System.Collections.Generic;
 
 namespace WebMaterialTest
 {
     public class UnitTests
     {
-        private MaterialService _materialService = new MaterialService(
-            new ApplicationContext(new DbContextOptionsBuilder<ApplicationContext>()
-                .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=NewMaterialDb;Trusted_Connection=True;")
-                .Options), new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build());
+        //private MaterialService _materialService = new MaterialService(
+        //    new ApplicationContext(new DbContextOptionsBuilder<ApplicationContext>()
+        //        .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=NewMaterialDb;Trusted_Connection=True;")
+        //        .Options), new ConfigurationBuilder()
+        //    .SetBasePath(Directory.GetCurrentDirectory())
+        //    .AddJsonFile("appsettings.json")
+        //    .Build());
 
         [Fact]
         public void GetMaterialById_GetMaterialWithId1_NotNull()
         {
-            
-            var result = _materialService.GetMaterialById(1);
+            var mock = new Mock<IRepository>();
+            mock.Setup(repo => repo.FindById(1)).Returns(new Material { Id = 1, Name = "Test", Category = (Category)1 });
+            MaterialService materialService = new MaterialService(new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json")
+            .Build(), mock.Object);
+
+            var result = materialService.GetMaterialById(1);
             
             Assert.NotNull(result);
         }
@@ -34,7 +42,14 @@ namespace WebMaterialTest
         [Fact]
         public void GetMaterialByName_GetMaterialWithNameRINAT_NotNull()
         {
-            var result = _materialService.GetMaterialByName("RINAT");
+            var mock = new Mock<IRepository>();
+            mock.Setup(repo => repo.FindByName("RINAT")).Returns(new Material { Id = 1, Name = "RINAT", Category = (Category)1 });
+            MaterialService materialService = new MaterialService(new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json")
+            .Build(), mock.Object);
+
+            var result = materialService.GetMaterialByName("RINAT");
             
             Assert.NotNull(result);
         }
@@ -43,23 +58,46 @@ namespace WebMaterialTest
 
         public void ChangeMaterialCategory_GetMaterialWithEditCategory_Other()
         {
-            Material material = _materialService.GetMaterialById(1);
+            var mock = new Mock<IRepository>();
+            mock.Setup(repo => repo.FindByName("Test")).Returns(new Material { Id = 1, Name = "Test", Category = (Category)2 });
+            MaterialService materialService = new MaterialService(new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json")
+            .Build(), mock.Object);
 
-            var result = _materialService.ChangeMaterialCategory(material.Name, "Other");
+            var result = materialService.ChangeMaterialCategory("Test", (Category)1);
 
-            Assert.Equal("Other", result.Category);
+            Assert.Equal((Category)1, result.Category);
         }
 
         [Fact]
 
         public void AddMaterial_AddEmptyFile_NotNull()
         {
-            Material material = new Material { Name = "newmaterial", Category = "Other" };
+            var mock = new Mock<IRepository>();
+            var material = new Material { Id = 1, Name = "RINAT", Category = (Category)1 };
+            Material ret = null;
+            mock.Setup(repo => repo.FindByName("RINAT")).Returns(ret);
+            MaterialService materialService = new MaterialService(new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json")
+            .Build(), mock.Object);
             IFormFile file = new FormFile(new MemoryStream(Encoding.UTF8.GetBytes("new")), 0, 0, "Data", "text1.txt");
 
-            var result = _materialService.AddMaterial(material, file);
+            var result = materialService.AddMaterial(material, file);
             
             Assert.NotNull(result);
+        }
+        private List<Material> GetTestMaterials()
+        {
+            var materials = new List<Material>
+            {
+                new Material { Id=1, Name="Tom", Category=(Category)1},
+                new Material { Id=2, Name="Alice", Category=(Category)1},
+                new Material { Id=3, Name="Sam", Category=(Category)2},
+                new Material { Id=4, Name="Kate", Category=(Category)1}
+            };
+            return materials;
         }
     }
 }

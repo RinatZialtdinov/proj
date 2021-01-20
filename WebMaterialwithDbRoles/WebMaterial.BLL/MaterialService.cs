@@ -15,21 +15,25 @@ namespace WebMaterial.BLL
 {
     public class MaterialService : IMaterialService
     {
-        private readonly ApplicationContext _context;
+        //private readonly ApplicationContext _context;
+        private readonly IRepository _repository;
         private readonly IConfiguration _config;
-        public MaterialService(ApplicationContext context, IConfiguration config)
+        public MaterialService(IConfiguration config, IRepository repository)
         {
-            _context = context;
+            //_context = context;
             _config = config;
+            _repository = repository;
         }
 
         public IList<Material> GetAllMaterials()
         {
-            return _context.Materials.Include(p => p.Versions).ToList<Material>();
+            //return _context.Materials.Include(p => p.Versions).ToList<Material>();
+            return _repository.GetAllMaterials();
         }
         public Material GetMaterialByName(string name)
         {
-            var material = _context.Materials.Include(p => p.Versions).Where(p => p.Name == name).FirstOrDefault();
+            var material = _repository.FindByName(name);
+            //var material = _context.Materials.Include(p => p.Versions).Where(p => p.Name == name).FirstOrDefault();
             if (material == null)
                 return null;
             return material;
@@ -37,16 +41,18 @@ namespace WebMaterial.BLL
 
         public Material GetMaterialById(int id)
         {
-            var material = _context.Materials.Include(p => p.Versions).FirstOrDefault(p => p.Id == id);
+            var material = _repository.FindById(id);
+            //var material = _context.Materials.Include(p => p.Versions).FirstOrDefault(p => p.Id == id);
             if (material == null)
                 return null;
-            return (Material)material;
+            return material;
         }
 
         public Version AddMaterial(Material material, IFormFile file)
         {
             Version newVersion;
-            if (_context.Materials.FirstOrDefault(p => p.Name == material.Name) == null)
+            //if (_context.Materials.FirstOrDefault(p => p.Name == material.Name) == null)
+            if (_repository.FindByName(material.Name) == null)
             {
                 newVersion = new Version
                 {
@@ -59,10 +65,13 @@ namespace WebMaterial.BLL
                 var filestream = new FileStream(newVersion.Path, FileMode.Create);
                 
                     file.CopyTo(filestream);
-                
-                _context.Materials.Add(material);
-                _context.Versions.Add(newVersion);
-                _context.SaveChanges();
+
+                //_context.Materials.Add(material);
+                //_context.Versions.Add(newVersion);
+                //_context.SaveChanges();
+                _repository.AddMaterial(material);
+                _repository.AddVersion(newVersion);
+                _repository.AllSave();
                 return newVersion;
             }
             return null;
@@ -70,14 +79,15 @@ namespace WebMaterial.BLL
 
         public Version AddVersion(string name, IFormFile file)
         {
-            Material material = _context.Materials.Include(p => p.Versions).FirstOrDefault(p => p.Name == name);
+            //Material material = _context.Materials.Include(p => p.Versions).FirstOrDefault(p => p.Name == name);
+            Material material = _repository.FindByName(name);
             Version newVersion;
             if (material != null)
             {
                 newVersion = new Version
                 {
                     Material = material,
-                    Path = _config.GetValue<string>("PathFiles") + material.Name + "." + file.ContentType + "_" + (material.Versions.Count() + 1),
+                    Path = _config.GetValue<string>("PathFiles") + material.Name + "_" + (material.Versions.Count() + 1) + '.' + file.FileName.Split('.')[1],
                     Release = material.Versions.Count() + 1,
                     Size = file.Length,
                     UploadDateTime = DateTime.Now
@@ -86,16 +96,19 @@ namespace WebMaterial.BLL
                 {
                     file.CopyToAsync(filestream);
                 }
-                _context.Versions.Add(newVersion);
-                _context.SaveChanges();
+                //_context.Versions.Add(newVersion);
+                //_context.SaveChanges();
+                _repository.AddVersion(newVersion);
+                _repository.AllSave();
                 return newVersion;
             }
             return null;
         }
         public IList<Material> GetFilteredMaterials(string category)
         {
-            var materials = from m in _context.Materials.Include(p => p.Versions)
-                           select m;
+            //var materials = from m in _context.Materials.Include(p => p.Versions)
+            //               select m;
+            var materials = _repository.SelectAllMaterials();
             var filteredMaterials = materials.Where(s => s.Category == category);
             if (filteredMaterials != null)
                 return filteredMaterials.ToList();
@@ -104,11 +117,13 @@ namespace WebMaterial.BLL
 
         public Material ChangeMaterialCategory(string name, string category)
         {
-            var material = _context.Materials.Include(p => p.Versions).Where(p => p.Name == name).FirstOrDefault();
+            //var material = _context.Materials.Include(p => p.Versions).Where(p => p.Name == name).FirstOrDefault();
+            var material = _repository.FindByName(name);
             if (material != null)
             {
                 material.Category = category;
-                _context.SaveChanges();
+                _repository.AllSave();
+                //_context.SaveChanges();
                 return material;
             }
             return null;
@@ -118,7 +133,8 @@ namespace WebMaterial.BLL
         {
             string Path;
             byte[] mas;
-            var material = _context.Materials.Include(p => p.Versions).FirstOrDefault(p => p.Name == name);
+            //var material = _context.Materials.Include(p => p.Versions).FirstOrDefault(p => p.Name == name);
+            var material = _repository.FindByName(name);
             if (material != null)
             {
                 if (version != null)

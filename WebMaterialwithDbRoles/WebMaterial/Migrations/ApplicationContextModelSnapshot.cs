@@ -175,7 +175,10 @@ namespace WebMaterial.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Category")
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Extensio")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

@@ -16,6 +16,7 @@ using WebMaterial.BLL;
 using Microsoft.AspNetCore.Identity;
 using WebMaterial.DAL.Models;
 using Hangfire;
+using Swashbuckle.AspNetCore;
 
 namespace WebMaterial
 {
@@ -43,14 +44,29 @@ namespace WebMaterial
                 options.Password.RequireNonAlphanumeric = false;
             }).AddEntityFrameworkStores<ApplicationContext>();
 
+            //var _secret = Configuration["Secret"];
+
             services.AddControllers().AddNewtonsoftJson(op =>
                     op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-           // services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection")));
-          // services.AddHangfireServer();
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new Info
+            //    {
+            //        Version = "v1",
+            //        Title = "Test API",
+            //        Description = "ASP.NET Core Web API"
+            //    });
+            //});
+            services.AddSwaggerDocument();
+
+            //services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddHangfireServer();
 
             services.AddTransient<IMaterialService, MaterialService>();
-           services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IRepository, Repository>();
+            services.AddTransient<IFileService, FileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,9 +77,11 @@ namespace WebMaterial
                 app.UseDeveloperExceptionPage();
             }
 
-           // app.UseHangfireDashboard();
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
+            //app.UseHangfireDashboard();
 
-            //RecurringJob.AddOrUpdate(() => MailService.SendMail("test message"), Cron.Minutely);
+            //RecurringJob.AddOrUpdate<MailService>(s => s.SendMail("test message"), Cron.Hourly);
 
             app.UseHttpsRedirection();
 

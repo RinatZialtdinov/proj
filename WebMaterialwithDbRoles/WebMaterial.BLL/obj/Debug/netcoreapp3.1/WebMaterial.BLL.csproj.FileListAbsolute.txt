@@ -68,8 +68,8 @@ C:\Users\Rinat\Desktop\WebMaterialwithDbRoles\WebMaterial.BLL\bin\Debug\netcorea
 C:\Users\Rinat\Desktop\WebMaterialwithDbRoles\WebMaterial.BLL\obj\Debug\netcoreapp3.1\WebMaterial.BLL.csprojAssemblyReference.cache
 C:\Users\Rinat\Desktop\WebMaterialwithDbRoles\WebMaterial.BLL\obj\Debug\netcoreapp3.1\WebMaterial.BLL.AssemblyInfoInputs.cache
 C:\Users\Rinat\Desktop\WebMaterialwithDbRoles\WebMaterial.BLL\obj\Debug\netcoreapp3.1\WebMaterial.BLL.AssemblyInfo.cs
-C:\Users\Rinat\Desktop\WebMaterialwithDbRoles\WebMaterial.BLL\obj\Debug\netcoreapp3.1\WebMaterial.BLL.csproj.CoreCompileInputs.cache
 C:\Users\Rinat\Desktop\WebMaterialwithDbRoles\WebMaterial.BLL\obj\Debug\netcoreapp3.1\WebMaterial.BLL.csproj.CopyComplete
 C:\Users\Rinat\Desktop\WebMaterialwithDbRoles\WebMaterial.BLL\obj\Debug\netcoreapp3.1\WebMaterial.BLL.dll
 C:\Users\Rinat\Desktop\WebMaterialwithDbRoles\WebMaterial.BLL\obj\Debug\netcoreapp3.1\WebMaterial.BLL.pdb
 C:\Users\Rinat\Desktop\WebMaterialwithDbRoles\WebMaterial.BLL\obj\Debug\netcoreapp3.1\WebMaterial.BLL.genruntimeconfig.cache
+C:\Users\Rinat\Desktop\WebMaterialwithDbRoles\WebMaterial.BLL\obj\Debug\netcoreapp3.1\WebMaterial.BLL.csproj.CoreCompileInputs.cache
