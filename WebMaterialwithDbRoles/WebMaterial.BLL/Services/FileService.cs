@@ -26,7 +26,7 @@ namespace WebMaterial.BLL
             {
                 if (version != null)
                 {
-                    Path = _config.GetValue<string>("PathFiles") + material.Name + "_" + version + '.' + material.Extensio;
+                    Path = _config.GetValue<string>("PathFiles") + material.Name + "_" + version + '.' + material.Extension;
                     mas = System.IO.File.ReadAllBytes(Path);
                     return mas;
                     //return material;
@@ -34,7 +34,7 @@ namespace WebMaterial.BLL
                 }
                 else
                 {
-                    Path = _config.GetValue<string>("PathFiles") + material.Name + "_" + material.Versions.Count() + '.' + material.Extensio;
+                    Path = _config.GetValue<string>("PathFiles") + material.Name + "_" + material.Versions.Count() + '.' + material.Extension;
                     mas = System.IO.File.ReadAllBytes(Path);
                     return mas;
                     //return material;

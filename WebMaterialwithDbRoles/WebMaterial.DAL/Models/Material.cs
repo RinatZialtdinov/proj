@@ -20,6 +20,6 @@ namespace WebMaterial.DAL.Models
         public string Name { get; set; }
         public Category Category { get; set; }
         public ICollection<Version> Versions { get; set; }
-        public string Extensio { get; set; }
+        public string Extension { get; set; }
     }
 }

@@ -71,7 +71,8 @@ namespace WebMaterial.Controllers
             var result = _fileService.DownloadFileFromSystem(name, version);
             if (result != null)
             {
-                return File(result, "application/octet-stream", name);
+                var material = _materialService.GetMaterialByName(name);
+                return File(result, "application/octet-stream", name + '.' + material.Extension);
             }
             return BadRequest("Не удалось найти файл с данным именем");
         }
@@ -94,7 +95,7 @@ namespace WebMaterial.Controllers
             if (material.Name != null && file != null
                 && file.Length < _configuration.GetValue<long>("Size"))
             {
-                Material newMaterial = new Material { Name = material.Name, Category = material.Category, Extensio = file.FileName.Split(".").Last() };
+                Material newMaterial = new Material { Name = material.Name, Category = material.Category, Extension = file.FileName.Split(".").Last() };
                 var result = _materialService.AddMaterial(newMaterial, file);
                 if (result != null)
                     return Ok();
@@ -127,35 +128,5 @@ namespace WebMaterial.Controllers
             }
             return BadRequest("Не удалось найти материал с данным именем");
         }
-
-
-        // PUT: api/Material
-        //[HttpPut]
-        //public IActionResult UpdateMaterial(/*NewVersionMaterialDTO model*/)
-        //{
-        //    return Ok();
-        //}
-        //// PUT: api/Material/Base64
-        //[Route("Base64")]
-        //[HttpPut]
-        //public IActionResult UpdateBase64Material(/*NewVersionMaterialDTO model*/)
-        //{
-        //    return Ok();
-        //}
-
-        // DELETE: api/Material/5
-        //[HttpDelete("{id}")]
-        //public IActionResult DeleteMaterial(int id)
-        //{
-        //    return Ok();
-        //}
-
-
-        // GET: api/Material/Download/{name}
-        //[HttpGet("download/{name}")]
-        //public IActionResult DownloadMaterial(string name, int? version)
-        //{
-        //    return Ok();
-        //}
     }
 }

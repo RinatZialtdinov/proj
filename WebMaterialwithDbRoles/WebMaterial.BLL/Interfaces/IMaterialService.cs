@@ -17,7 +17,7 @@ namespace WebMaterial.BLL
         public IList<Material> GetAllMaterials();
         public IList<Material> GetFilteredMaterials(Category category);
         public Material ChangeMaterialCategory(string name, Category category);
-        //public byte[] DownloadFile(string name, int? version);
+
         public Version AddMaterial(Material material, IFormFile file);
         public Version AddVersion(string name, IFormFile file);
         public string DeleteMaterial(string name);
